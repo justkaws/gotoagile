@@ -1,0 +1,5 @@
+*.tmp
+.metadata/*
+MeuTesouro/bin/*
+MeuTesouro/.settings/*
+
