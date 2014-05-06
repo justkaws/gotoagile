@@ -16,7 +16,9 @@ import com.meutesouro.utils.*;
 
 public class MainActivity extends Activity {
 
-    @Override
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -34,7 +36,7 @@ public class MainActivity extends Activity {
         
         List<MoneyTitle> title2 = (List<MoneyTitle>)xmlUtil.XmlLoadData( "teste.xml" );
         
-        Log.d("Total de Elementos", title2.size());
+        Log.d(TAG, "Total de Elementos: " + title2.size());
     }
 
     public void listContent(List<MoneyTitle> data){
