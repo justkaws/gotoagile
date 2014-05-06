@@ -24,10 +24,15 @@ public class MainActivity extends Activity {
         titleList.add(new MoneyTitle().setName("NTNB Principal 150824"));
         titleList.add(new MoneyTitle().setName("NTNB 150535"));
         
-        ListView listView = (ListView) findViewById(R.id.listView1);
-        listView.setAdapter(new FavoriteListAdapter(getApplication(), R.layout.favorite_list_item, titleList));
+        listContent(titleList);
     }
 
+    public void listContent(List<MoneyTitle> data){
+    	
+    	ListView listView = (ListView) findViewById(R.id.listView1);
+    	listView.setAdapter(new FavoriteListAdapter(getApplication(), R.layout.favorite_list_item, data));
+    	
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
