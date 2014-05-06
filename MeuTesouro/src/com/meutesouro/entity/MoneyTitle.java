@@ -1,6 +1,6 @@
 package com.meutesouro.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Títulos Publicos

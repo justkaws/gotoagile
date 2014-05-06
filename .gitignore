@@ -2,4 +2,5 @@
 .metadata/*
 MeuTesouro/bin/*
 MeuTesouro/.settings/*
-
+*.class
+*.orig
