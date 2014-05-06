@@ -22,17 +22,17 @@ public class FavoriteListAdapter extends ArrayAdapter<MoneyTitle> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		
-		MoneyTitle title = getItem(position);
+	   MoneyTitle title = getItem(position);
 		
-		// Check if an existing view is being reused, otherwise inflate the view
-	       if (convertView == null) {
-	          convertView = LayoutInflater.from(getContext()).inflate(R.layout.favorite_list_item, parent, false);
-	       }
-	       // Lookup view for data population
-	       TextView tvTitleName = (TextView) convertView.findViewById(R.id.money_title);
-	       // Populate the data into the template view using the data object
-	       tvTitleName.setText(title.getName());
-	       // Return the completed view to render on screen
-	       return convertView;
+	   // Check if an existing view is being reused, otherwise inflate the view
+	   if (convertView == null) {
+	      convertView = LayoutInflater.from(getContext()).inflate(R.layout.favorite_list_item, parent, false);
+	   }
+	   // Lookup view for data population
+	   TextView tvTitleName = (TextView) convertView.findViewById(R.id.money_title);
+	   // Populate the data into the template view using the data object
+	   tvTitleName.setText(title.getName());
+	   // Return the completed view to render on screen
+	   return convertView;
 	}
 }
