@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.meutesouro.adapter.FavoriteListAdapter;
 import com.meutesouro.entity.MoneyTitle;
@@ -23,7 +24,7 @@ public class MainActivity extends Activity {
         List<MoneyTitle> titleList = new ArrayList<MoneyTitle>();
         titleList.add(new MoneyTitle().setName("NTNB Principal 150519"));
         titleList.add(new MoneyTitle().setName("NTNB 150820"));
-        titleList.add(new MoneyTitle().setName("NTNB Principal 150824"));
+        titleList.add(new MoneyTitle().setName("NTNB Principal 150824").setFavorite(true));
         titleList.add(new MoneyTitle().setName("NTNB 150535"));
         
         listContent(titleList);
