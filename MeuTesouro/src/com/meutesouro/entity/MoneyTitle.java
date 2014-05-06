@@ -16,26 +16,34 @@ public class MoneyTitle {
 	public String getName() {
 		return mName;
 	}
-	public void setName(String name) {
+	public MoneyTitle setName(String name) {
 		this.mName = name;
+		
+		return this;
 	}
 	public Date getExpiredDate() {
 		return mExpiredDate;
 	}
-	public void setExpiredDate(Date expiredDate) {
+	public MoneyTitle setExpiredDate(Date expiredDate) {
 		this.mExpiredDate = expiredDate;
+		
+		return this;
 	}
 	public TitleTax getCurrentTitleTax() {
 		return mCurrentTitleTax;
 	}
-	public void setCurrentTitleTax(TitleTax currentTitleTax) {
+	public MoneyTitle setCurrentTitleTax(TitleTax currentTitleTax) {
 		this.mCurrentTitleTax = currentTitleTax;
+		
+		return this;
 	}
 	public TitleTax getAnualTitleTax() {
 		return mAnualTitleTax;
 	}
-	public void setAnualTitleTax(TitleTax anualTitleTax) {
+	public MoneyTitle setAnualTitleTax(TitleTax anualTitleTax) {
 		this.mAnualTitleTax = anualTitleTax;
+		
+		return this;
 	}
 	
 }
