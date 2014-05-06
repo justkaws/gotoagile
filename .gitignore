@@ -1,6 +1,7 @@
-*.tmp
+﻿*.tmp
 .metadata/*
-MeuTesouro/bin/*
+MeuTesouro/bin/
+MeuTesouro/gen/
 MeuTesouro/.settings/*
 *.class
 *.orig
