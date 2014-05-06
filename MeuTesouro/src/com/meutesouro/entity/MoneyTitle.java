@@ -12,6 +12,7 @@ public class MoneyTitle {
 	private Date mExpiredDate;
 	private TitleTax  mCurrentTitleTax;
 	private TitleTax mAnualTitleTax;
+	private boolean mFavorite;
 	
 	public String getName() {
 		return mName;
@@ -42,6 +43,14 @@ public class MoneyTitle {
 	}
 	public MoneyTitle setAnualTitleTax(TitleTax anualTitleTax) {
 		this.mAnualTitleTax = anualTitleTax;
+		
+		return this;
+	}
+	public boolean isFavorite() {
+		return mFavorite;
+	}
+	public MoneyTitle setFavorite(boolean favorite) {
+		this.mFavorite = favorite;
 		
 		return this;
 	}
