@@ -1,135 +1,80 @@
 package com.meutesouro.utils;
 
-import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xmlpull.v1.XmlSerializer;
-
-import com.meutesouro.entity.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import android.content.Context;
-import android.util.Xml;
 
 public class XmlUtils {
 	
-	private	String XmlFileName;
-	private FileInputStream FileInput;
-	private Context XmlContext;
+	private	String xmlFileName;
+	private FileInputStream fileInput;
+	private Context xmlContext;
 	
 	public String getXmlFileName() {
-		return XmlFileName;
+		return xmlFileName;
 	}
 
-	public void setXmlFileName(String xmlFileName) {
-		XmlFileName = xmlFileName;
+	public void setXmlFileName(String m_xmlFileName) {
+		xmlFileName = m_xmlFileName;
 	}
 
 	public FileInputStream getFileInput() {
-		return FileInput;
+		return fileInput;
 	}
 
-	public void setFileInput(FileInputStream fileInput) {
-		FileInput = fileInput;
+	public void setFileInput(FileInputStream m_fileInput) {
+		fileInput = m_fileInput;
 	}
 	
-	public XmlUtils( Context context ){
-		XmlContext = context;
+	public XmlUtils( Context m_context ){
+		xmlContext = m_context;
 	}
 
 	
-	public int XmlSaveData(String m_FileName, Object m_Object){
+	public void XmlSaveData(String m_fileName, Object m_object){
 		
-		int StatusReturn = -1;
-		/*FileOutputStream FileOutput;
+		FileOutputStream fileOutput = null;
+		setXmlFileName(m_fileName);
 		
-		setXmlFileName(m_FileName);
-		
-		if ( m_Object.getClass().equals( MoneyTitle.class.t)
-
-		FileOutput = XmlContext.openFileOutput( XmlFileName, Context.MODE_APPEND);
-		
-		if ( null != FileOutput ){
-		    XmlSerializer serializer = Xml.newSerializer();
-		    serializer.setOutput(FileOutput, "UTF-8");
-		    serializer.startDocument(null, Boolean.valueOf(true));
-		    serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
-		    serializer.startTag(null, "root");
+		try
+		{
+			fileOutput = xmlContext.openFileOutput(xmlFileName, Context.MODE_APPEND);
+			ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);
+			objectOutput.writeObject(this);
+			objectOutput.close();
+		} catch( Exception e) {
 		}
-			
-
-	    for(int j = 0 ; j < 3 ; j++)
-	    {
-
-	        serializer.startTag(null, "record");
-
-	        serializer.text(data);
-
-	        serializer.endTag(null, "record");
-	    }
-	     serializer.endDocument();
-
-	     serializer.flush();
-
-	     fos.close();
-		
-		
-		*/
-		return StatusReturn;
+		finally
+		{
+			try {
+				fileOutput.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
-	public void XmlLoadData(){
-		
-		/*
-		   FileInputStream fis = null;
-		    InputStreamReader isr = null;
-
-		    fis = context.openFileInput(filename);
-		    isr = new InputStreamReader(fis);
-		    char[] inputBuffer = new char[fis.available()];
-		    isr.read(inputBuffer);
-		    data = new String(inputBuffer);
-		    isr.close();
-		    fis.close();
-
-
-		        InputStream is = new ByteArrayInputStream(data.getBytes("UTF-8"));
-
-		        ArrayList<XmlData> xmlDataList = new ArrayList<XmlData>();
-
-		    XmlData xmlDataObj;
-		    DocumentBuilderFactory dbf;
-		    DocumentBuilder db;
-		    NodeList items = null;
-		    Document dom;
-
-		    dbf = DocumentBuilderFactory.newInstance();
-		    db = dbf.newDocumentBuilder();
-		    dom = db.parse(is);
-		    
-		    dom.getDocumentElement().normalize();
-
-		    items = dom.getElementsByTagName("record");
-
-		    ArrayList<String> arr = new ArrayList<String>();
-
-		    for (int i=0;i<items.getLength();i++){
-
-		        Node item = items.item(i);
-
-		         arr.add(item.getNodeValue());
-
-		    }      
-		    */
+	public Object XmlLoadData(String m_FileName){
+		FileInputStream fileInput = null;
+		Object object = null;
+		try {
+			fileInput = xmlContext.openFileInput(m_FileName);
+			ObjectInputStream inputStream = new ObjectInputStream(fileInput);
+			object = (Object)inputStream.readObject();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fileInput.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return object;
 	}
 }
 
