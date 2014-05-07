@@ -38,9 +38,10 @@ public class HtmlParser {
 	private void PopulateMoneyTitleList() {
 		ArrayList<MoneyTitle> moneyTitleList = new ArrayList<MoneyTitle>();
 		
-		for (int i = 4; i < 16; i++)
+		int i = 4;
+		Elements lineItems = htmlDocument.select("tr:nth-child(" + i + ") td");
+		while (lineItems.size() > 0)
 		{
-			Elements lineItems = htmlDocument.select("tr:nth-child(" + i + ") td");
 			if (lineItems.size() > 1)
 			{
 				Log.d(TAG, "Line: " + i);
@@ -60,39 +61,56 @@ public class HtmlParser {
 				moneyTitle.setExpiredDate(date);
 				
 				TitleTax anualTax = new TitleTax();
+				
 				String taxesBuying = lineItems.get(2).text().trim();
-				taxesBuying = taxesBuying.replaceFirst("%", "");
-				taxesBuying = taxesBuying.replaceFirst(",", ".");
-				anualTax.setTaxesBuying(Double.parseDouble(taxesBuying));
+				anualTax.setTaxesBuying(convertTax(taxesBuying));
 				
 				String taxesSelling = lineItems.get(3).text().trim();
-				if (taxesSelling.equals("-"))
-					anualTax.setTaxesSelling(0);
-				else
-					anualTax.setTaxesSelling(Double.parseDouble(taxesSelling.replaceFirst("%", "")));
+				anualTax.setTaxesSelling(convertTax(taxesSelling));
+				
 				moneyTitle.setAnualTitleTax(anualTax);
 				
 				TitleTax currentTax = new TitleTax();
+				
 				String currentTaxesBuying = lineItems.get(4).text().trim();
-				currentTaxesBuying = currentTaxesBuying.replaceFirst("R", "");
-				currentTaxesBuying = currentTaxesBuying.replaceFirst("\\$", "");
-				currentTaxesBuying = currentTaxesBuying.replaceFirst("\\.", "");
-				currentTaxesBuying = currentTaxesBuying.replaceFirst(",", ".");
-				currentTax.setTaxesBuying(Double.parseDouble(currentTaxesBuying.trim()));
+				currentTax.setTaxesBuying(convertTax(currentTaxesBuying));
 				
 				String currentTaxesSelling = lineItems.get(5).text().trim();
-				if (currentTaxesSelling.equals("-"))
-					currentTax.setTaxesSelling(0);
-				else
-					currentTax.setTaxesSelling(Double.parseDouble(currentTaxesSelling.replaceFirst("%", "")));
+				currentTax.setTaxesSelling(convertTax(currentTaxesSelling));
+				
 				moneyTitle.setCurrentTitleTax(currentTax);
 				
 				moneyTitleList.add(moneyTitle);
 			}
+			
+			i++;
+			lineItems = htmlDocument.select("tr:nth-child(" + i + ") td");
 		}
 		
 		Log.d(TAG, "Finished parsing.");
 		
-		listener.infoReceived(moneyTitleList);
+		if (listener != null)
+			listener.infoReceived(moneyTitleList);
+	}
+	
+	private double convertTax(String taxAsString)
+	{
+		String auxTax = taxAsString;
+		auxTax = auxTax.replaceFirst("%", "");
+		auxTax = auxTax.replaceFirst("R", "");
+		auxTax = auxTax.replaceFirst("\\$", "");
+		auxTax = auxTax.replaceFirst("\\.", "");
+		auxTax = auxTax.replaceFirst(",", ".");
+		double tax;
+		try
+		{
+			tax = Double.parseDouble(auxTax);
+		}
+		catch (Exception e)
+		{
+			tax = 0;
+		}
+		
+		return tax;
 	}
 }
