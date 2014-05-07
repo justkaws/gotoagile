@@ -24,7 +24,8 @@ public class MainActivity extends Activity implements IParserListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        HtmlParser html = new HtmlParser(this);
+        HtmlParser html = HtmlParser.getInstance();
+        html.parse(this);
     }
 
     public void listContent(List<MoneyTitle> data){

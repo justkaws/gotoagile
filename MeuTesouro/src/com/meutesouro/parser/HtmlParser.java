@@ -4,12 +4,10 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
+import android.annotation.SuppressLint;
 import android.util.Log;
-
 import com.meutesouro.entity.MoneyTitle;
 import com.meutesouro.entity.TitleTax;
 
@@ -20,14 +18,20 @@ public class HtmlParser {
 	
 	private static String TAG = "HtmlParser";
 	private static String URL = "http://www3.tesouro.gov.br/tesouro_direto/consulta_titulos_novosite/consultatitulos.asp";
+	private static HtmlParser instance = null;
 	
-	private String url;
 	private Document htmlDocument;
 	private IParserListener listener;
 	
-	public HtmlParser(IParserListener listener) {
-		this.listener = listener;
-		parse();
+	private HtmlParser() {
+		
+	}
+	
+	public static HtmlParser getInstance() {
+		if (instance == null)
+			instance = new HtmlParser();
+		
+		return instance;
 	}
 	
 	public void setHtmlDocument(Document htmlDocument) {
@@ -38,10 +42,12 @@ public class HtmlParser {
 			listener.error(ErrorCode.NoInternetConnectionError, "Connection failed.");
 	}
 	
-	private void parse() {
+	public void parse(IParserListener listener) {
+		this.listener = listener;
 		new FetchHtmlTask(this).execute(URL);
 	}
 	
+	@SuppressLint("SimpleDateFormat")
 	private void PopulateMoneyTitleList() {
 		ArrayList<MoneyTitle> moneyTitleList = new ArrayList<MoneyTitle>();
 		
