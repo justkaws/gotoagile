@@ -5,14 +5,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.meutesouro.adapter.FavoriteListAdapter;
 import com.meutesouro.entity.MoneyTitle;
-import com.meutesouro.utils.*;
 
 public class MainActivity extends Activity {
 
@@ -30,13 +27,6 @@ public class MainActivity extends Activity {
         titleList.add(new MoneyTitle().setName("NTNB 150535"));
         
         listContent(titleList);
-        
-        XmlUtils xmlUtil = new XmlUtils(getBaseContext());
-        xmlUtil.XmlSaveData("teste.xml", titleList);
-        
-        List<MoneyTitle> title2 = (List<MoneyTitle>)xmlUtil.XmlLoadData( "teste.xml" );
-        
-        Log.d(TAG, "Total de Elementos: " + title2.size());
     }
 
     public void listContent(List<MoneyTitle> data){
