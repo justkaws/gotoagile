@@ -18,21 +18,28 @@ import com.meutesouro.parser.IParserListener;
 import com.meutesouro.utils.XmlUtils;
 
 import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
-public class MainActivity extends FragmentActivity implements IParserListener {
+import com.meutesouro.controller.MainController;
+import com.meutesouro.fragments.MoneyTitleFragment;
+import com.meutesouro.fragments.SlidingMenuFragment;
+import com.meutesouro.observer.Action;
+import com.meutesouro.observer.Observer;
+import com.meutesouro.view.FragmentView;
+
+public class MainActivity extends FragmentActivity implements FragmentView {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 	private SlidingMenu menu;
+	
+	private MainController mMainController;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
      
         setContentView(R.layout.activity_main);
-        
-        HtmlParser html = HtmlParser.getInstance();
-        html.parse(this);
-        
          
         //List<MoneyTitle> title2 = (List<MoneyTitle>)xmlUti\l.XmlLoadData( "teste.xml" );
         //Log.d(TAG, "Total de Elementos: " + title2.size());
@@ -46,30 +53,35 @@ public class MainActivity extends FragmentActivity implements IParserListener {
         menu.setFadeDegree(0.35f);
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         menu.setMenu(R.layout.menu_frame);
-    }
-
-    public void listContent(List<MoneyTitle> data){
-    	
-    	ListView listView = (ListView) findViewById(R.id.listView1);
-    	listView.setAdapter(new FavoriteListAdapter(getApplication(), R.layout.favorite_list_item, data));
-    	
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        
+        mMainController = new MainController(this);
+        
+//        XmlUtils xmlUtil = new XmlUtils(getBaseContext());
+//        xmlUtil.XmlSaveData("teste.xml", titleList);
+         
+        //List<MoneyTitle> title2 = (List<MoneyTitle>)xmlUti\l.XmlLoadData( "teste.xml" );
+        //Log.d(TAG, "Total de Elementos: " + title2.size());
+        
+       
     }
 
 	@Override
-	public void infoReceived(List<MoneyTitle> moneyTitlesList) {
-		listContent(moneyTitlesList);
+	public void changeView(int resourceId, Fragment fragment) {
+		getSupportFragmentManager()
+        .beginTransaction()
+        .replace(resourceId, fragment)
+        .commit();
 	}
 
 	@Override
-	public void error(ErrorCode errorCode, String errorMessage) {
-		Log.d(TAG, errorMessage);
+	public void receive(Action action) {
+		switch (action) {
+		case Hide_Menu:
+			menu.toggle();
+			break;
+		default:
+			break;
+		}
 	}
     
 }
