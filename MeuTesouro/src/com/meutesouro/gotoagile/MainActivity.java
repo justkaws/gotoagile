@@ -1,6 +1,5 @@
 package com.meutesouro.gotoagile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -10,29 +9,20 @@ import android.widget.ListView;
 
 import com.meutesouro.adapter.FavoriteListAdapter;
 import com.meutesouro.entity.MoneyTitle;
+import com.meutesouro.parser.HtmlParser;
+import com.meutesouro.parser.IParserListener;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements IParserListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    List<MoneyTitle> titleList;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        List<MoneyTitle> titleList = new ArrayList<MoneyTitle>();
-        titleList.add(new MoneyTitle().setName("NTNB Principal 150519"));
-        titleList.add(new MoneyTitle().setName("NTNB 150820"));
-        titleList.add(new MoneyTitle().setName("NTNB Principal 150824").setFavorite(true));
-        titleList.add(new MoneyTitle().setName("NTNB 150535"));
-        
-        listContent(titleList);
-<<<<<<< Updated upstream
-=======
-        
-        XmlUtils xmlUtil = new XmlUtils(getBaseContext());
-        xmlUtil.XmlSaveData("teste.xml", titleList);
->>>>>>> Stashed changes
+        HtmlParser html = new HtmlParser(this);
     }
 
     public void listContent(List<MoneyTitle> data){
@@ -48,5 +38,11 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
+	@Override
+	public void infoReceived(List<MoneyTitle> moneyTitlesList) {
+		titleList = moneyTitlesList;
+		listContent(titleList);
+	}
     
 }
