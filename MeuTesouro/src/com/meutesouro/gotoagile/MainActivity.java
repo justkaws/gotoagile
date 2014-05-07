@@ -27,6 +27,12 @@ public class MainActivity extends Activity {
         titleList.add(new MoneyTitle().setName("NTNB 150535"));
         
         listContent(titleList);
+<<<<<<< Updated upstream
+=======
+        
+        XmlUtils xmlUtil = new XmlUtils(getBaseContext());
+        xmlUtil.XmlSaveData("teste.xml", titleList);
+>>>>>>> Stashed changes
     }
 
     public void listContent(List<MoneyTitle> data){
