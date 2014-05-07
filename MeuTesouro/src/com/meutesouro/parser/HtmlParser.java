@@ -14,6 +14,10 @@ import com.meutesouro.entity.MoneyTitle;
 import com.meutesouro.entity.TitleTax;
 
 public class HtmlParser {
+	public enum ErrorCode {
+		NoInternetConnectionError
+	}
+	
 	private static String TAG = "HtmlParser";
 	private static String URL = "http://www3.tesouro.gov.br/tesouro_direto/consulta_titulos_novosite/consultatitulos.asp";
 	
@@ -28,7 +32,10 @@ public class HtmlParser {
 	
 	public void setHtmlDocument(Document htmlDocument) {
 		this.htmlDocument = htmlDocument;
-		PopulateMoneyTitleList();
+		if (htmlDocument != null)
+			PopulateMoneyTitleList();
+		else if (listener != null)
+			listener.error(ErrorCode.NoInternetConnectionError, "Connection failed.");
 	}
 	
 	private void parse() {

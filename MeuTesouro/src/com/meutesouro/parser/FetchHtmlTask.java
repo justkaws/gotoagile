@@ -22,7 +22,6 @@ public class FetchHtmlTask extends AsyncTask<String, Integer, Document> {
     }
     
     protected void onPostExecute(Document htmlDocument) {
-    	if (htmlDocument != null)
-    		parser.setHtmlDocument(htmlDocument);
+		parser.setHtmlDocument(htmlDocument);
     }
 }

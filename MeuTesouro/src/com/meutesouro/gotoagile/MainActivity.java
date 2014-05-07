@@ -4,12 +4,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
 
 import com.meutesouro.adapter.FavoriteListAdapter;
 import com.meutesouro.entity.MoneyTitle;
 import com.meutesouro.parser.HtmlParser;
+import com.meutesouro.parser.HtmlParser.ErrorCode;
 import com.meutesouro.parser.IParserListener;
 
 public class MainActivity extends Activity implements IParserListener {
@@ -43,6 +45,11 @@ public class MainActivity extends Activity implements IParserListener {
 	public void infoReceived(List<MoneyTitle> moneyTitlesList) {
 		titleList = moneyTitlesList;
 		listContent(titleList);
+	}
+
+	@Override
+	public void error(ErrorCode errorCode, String errorMessage) {
+		Log.d(TAG, errorMessage);
 	}
     
 }
