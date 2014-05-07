@@ -1,31 +1,14 @@
 package com.meutesouro.gotoagile;
 
-import java.util.List;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.widget.ListView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.meutesouro.adapter.FavoriteListAdapter;
-import com.meutesouro.entity.MoneyTitle;
-
-import com.meutesouro.parser.HtmlParser;
-import com.meutesouro.parser.HtmlParser.ErrorCode;
-import com.meutesouro.parser.IParserListener;
-
-import com.meutesouro.utils.XmlUtils;
 
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.meutesouro.controller.MainController;
-import com.meutesouro.fragments.MoneyTitleFragment;
-import com.meutesouro.fragments.SlidingMenuFragment;
 import com.meutesouro.observer.Action;
-import com.meutesouro.observer.Observer;
 import com.meutesouro.view.FragmentView;
 
 public class MainActivity extends FragmentActivity implements FragmentView {
